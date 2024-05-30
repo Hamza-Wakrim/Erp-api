@@ -167,6 +167,33 @@
                                     <i class="fas fa-shopping-cart"></i>{{__('Product & Service')}}
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ (Request::segment(1) == 'productservice')}}"
+                                   href="#navbar-crm" data-toggle="collapse" role="button"
+                                   aria-expanded="{{ (Request::segment(1) == 'productservice')}}"
+                                   aria-controls="navbar-crm">
+                                    <i class="fa fa-filter"></i>{{__('CRM')}}
+                                    <i class="fas fa-sort-up"></i>
+                                </a>
+                                <div
+                                    class="collapse {{ (Request::segment(1) == 'stages' || Request::segment(1) == 'labels' || Request::segment(1) == 'sources' || Request::segment(1) == 'lead_stages' || Request::segment(1) == 'leads'  || Request::segment(1) == 'form_builder' || Request::segment(1) == 'form_response' || Request::segment(1) == 'deals' || Request::segment(1) == 'pipelines')?'show':''}}"
+                                    id="navbar-crm">
+                                    <ul class="nav flex-column">
+                                        @can('manage products')
+                                            <li class="nav-item {{ (Request::route()->getName() == 'leads.list' || Request::route()->getName() == 'leads.index' || Request::route()->getName() == 'leads.show') ? ' active' : '' }}">
+                                                <a href="{{ route('productservice.index') }}"
+                                                   class="nav-link">{{ __('Product & Service') }}</a>
+                                            </li>
+                                        @endcan
+                                        @can('manage stock')
+                                            <li class="nav-item {{ (Request::route()->getName() == 'deals.list' || Request::route()->getName() == 'deals.index' || Request::route()->getName() == 'deals.show') ? ' active' : '' }}">
+                                                <a href="{{route('deals.index')}}"
+                                                   class="nav-link">{{ __('Deals') }}</a>
+                                            </li>
+                                        @endcan
+                                    </ul>
+                                </div>
+                            </li>
                         @endif
 
                         @if(\Auth::user()->show_crm() == 1)
@@ -376,8 +403,8 @@
                             @endif
                         @endif
                         <!-- For Hrm -->
-
-                        @if(\Auth::user()->show_hrm() == 1)
+                        {{-- feature to see if gonna set it for free or paid --}}
+                        {{-- @if(\Auth::user()->show_hrm() == 1)
                             @if( Gate::check('manage employee') || Gate::check('manage setsalary'))
                                 <li class="nav-item">
                                     <a class="nav-link {{ (Request::segment(1) == 'holiday-calender' || Request::segment(1) == 'reports-monthly-attendance' || Request::segment(1) == 'reports-leave' || Request::segment(1) == 'reports-payroll' || Request::segment(1) == 'leavetype' || Request::segment(1) == 'leave' || Request::segment(1) == 'attendanceemployee' || Request::segment(1) == 'document-upload' || Request::segment(1) == 'document' || Request::segment(1) == 'performanceType'  ||
@@ -953,7 +980,7 @@
                                     </div>
                                 </li>
                             @endcan
-                        @endif
+                        @endif --}}
                         <!-- end Hrm -->
                         @if(\Auth::user()->show_account() == 1)
                             @if( Gate::check('manage customer') || Gate::check('manage vender'))
@@ -1351,15 +1378,15 @@
                             @endif
                         @endif
                     @endif
-                    @if(\Auth::user()->type!='super admin')
+                    {{-- @if(\Auth::user()->type!='super admin')
                         <li class="nav-item">
                             <a href="{{route('support.index')}}"
                                class="nav-link {{ (Request::segment(1) == 'support')?'active':''}}">
                                 <i class="fas fa-ticket-alt"></i>{{__('Support')}}
                             </a>
                         </li>
-                    @endif
-                    @if(\Auth::user()->type!='super admin')
+                    @endif --}}
+                    {{-- @if(\Auth::user()->type!='super admin')
                         <li class="nav-item">
                             <a href="{{route('zoom-meeting.index')}}"
                                class="nav-link {{ (Request::segment(1) == 'zoom-meeting')?'active':''}}">
@@ -1374,24 +1401,24 @@
                                 <i class="fab fa-facebook-messenger"></i>{{__('Messenger')}}
                             </a>
                         </li>
-                    @endif
+                    @endif --}}
 
-                    @if(Gate::check('manage company plan'))
+                    {{-- @if(Gate::check('manage company plan'))
                         <li class="nav-item">
                             <a href="{{ route('plans.index') }}"
                                class="nav-link {{ (Request::route()->getName() == 'plans.index' || Request::route()->getName() == 'stripe') ? ' active' : '' }}">
                                 <i class="fas fa-trophy"></i>{{__('Plan')}}
                             </a>
                         </li>
-                    @endif
-                    @if(Gate::check('manage order') && Auth::user()->type == 'company')
+                    @endif --}}
+                    {{-- @if(Gate::check('manage order') && Auth::user()->type == 'company')
                         <li class="nav-item">
                             <a href="{{ route('order.index') }}"
                                class="nav-link {{ (Request::segment(1) == 'order')? 'active' : ''}}">
                                 <i class="fas fa-cart-plus"></i>{{__('Order')}}
                             </a>
                         </li>
-                    @endif
+                    @endif --}}
                     @if(Gate::check('manage company settings'))
                         <li class="nav-item">
                             <a href="{{ route('company.setting') }}"
